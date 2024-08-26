@@ -9,7 +9,7 @@ def parse_amount_string(amount_string: str) -> int:
     @:return the number portion of the reading, as an int (the dashboard uses the same precision)
     """
 
-    return int(re.sub("[^0-9]", "", amount_string).strip())
+    return int(re.sub("[^0-9]|m|3$", "", amount_string).strip())
 
 
 def parse_date_string(date_string: str) -> str:
