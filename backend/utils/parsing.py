@@ -21,4 +21,6 @@ def parse_date_string(date_string: str) -> str:
         - year, 4 digits
     :return: the same date, in a simpler format: dd-mm-yyyy
     """
-    return str(datetime.datetime.strptime(re.sub("th|st|rd|nd", "", date_string, 1), "%d %B %Y"))
+    return (
+        datetime.datetime.strptime(re.sub("th|st|rd|nd", "", date_string, 1), "%d %B %Y")
+    ).strftime("%m-%d-%Y")

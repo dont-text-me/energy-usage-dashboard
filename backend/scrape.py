@@ -9,14 +9,20 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from utils.urls import Urls
 from utils.collect_reading_type import collect_reading_type
+from utils.persist import persist
 
-# Use requests-html to login and obtain the cookie
+# Use requests-html to log in and obtain the cookie
+logger = logging.getLogger("switch2-scraper")
 logging.basicConfig(level=logging.INFO)
+if "SWITCH2_USERNAME" not in os.environ or "SWITCH2_PASSWORD" not in os.environ:
+    logging.error("Missing required environment variables, aborting...")
+    sys.exit(1)
+
 session = HTMLSession()
 initial_res = session.get(Urls.LOGIN)
-logging.info("Making initial request to obtain token")
+logger.info("Making initial request to obtain token")
 verification_token = initial_res.html.find("#LoginForm > input", first=True).attrs["value"]
-logging.info("Logging in")
+logger.info("logger in")
 login_res = session.post(
     "https://my.switch2.co.uk/Login",
     data={
@@ -26,9 +32,9 @@ login_res = session.post(
     },
 )
 if login_res.status_code != 200:
-    logging.error("could not log in, aborting...")
+    logger.error("could not log in, aborting...")
     sys.exit(1)
-logging.info("logged in, navigating to usage page")
+logger.info("logged in, navigating to usage page")
 
 cookies = session.cookies.items()
 # Use selenium to click through the website and gather the energy, hot and cold water data
@@ -41,26 +47,22 @@ for name, value in cookies:
 driver.refresh()
 # Navigate to the usage page. It opens on the cold water meter, showing the first 10 records
 driver.find_element_by_link_text("Usage").click()
-logging.info("Opened usage page")
+logger.info("Opened usage page")
 time.sleep(5)
-logging.info("collecting electricity readings...")
+logger.info("collecting electricity readings...")
 electricity_readings = collect_reading_type(driver, "electricity")
-logging.info(f"found {len(electricity_readings)} readings")
-with open("electricity_readings.json", "w") as outfile:
-    json.dump(electricity_readings, outfile)
+logger.info(f"found {len(electricity_readings)} readings")
 # now look at cold water readings
-logging.info("collecting cold water readings...")
+logger.info("collecting cold water readings...")
 cold_water_readings = collect_reading_type(driver, "cold_water")
-with open("cold_water_readings.json", "w") as outfile:
-    json.dump(cold_water_readings, outfile)
-logging.info(f"found {len(cold_water_readings)} readings")
+logger.info(f"found {len(cold_water_readings)} readings")
 # and finally, the heat meter
-logging.info("collecting heater readings...")
+logger.info("collecting heater readings...")
 heating_readings = collect_reading_type(driver, "heater")
-with open("heating_readings.json", "w") as outfile:
-    json.dump(heating_readings, outfile)
-logging.info(f"found {len(heating_readings)} readings")
-
+logger.info(f"found {len(heating_readings)} readings")
+logger.info("storing to redis...")
+persist(cold_water_readings, heating_readings, electricity_readings, logger)
+logger.info("all done, wrapping up...")
 # wrapping up: close the session and quit the browser
 session.close()
 driver.quit()
