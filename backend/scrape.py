@@ -45,6 +45,7 @@ for name, value in cookies:
     driver.add_cookie({"name": name, "value": value})
 driver.refresh()
 # Navigate to the usage page. It opens on the cold water meter, showing the first 10 records
+driver.maximize_window()
 driver.find_element_by_link_text("Usage").click()
 logger.info("Opened usage page")
 time.sleep(5)
