@@ -1,0 +1,24 @@
+name: 'Scrape usage data (nightly)'
+
+on:
+  schedule:
+    - cron: '05 0 * * *' # run daily at 5 minutes past midnight
+
+jobs:
+  main:
+    defaults:
+      run:
+        working-directory: ./backend
+    name: main
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4.1.7
+      - name: install python
+        uses: actions/setup-python@v5.1.1
+        with:
+          python-version: '3.12'
+      - name: install dependencies
+        run: pip install -r requirements.txt
+      - name: install chromedriver
+        uses: nanasess/setup-chromedriver@v2
