@@ -1,6 +1,7 @@
 name: 'Scrape usage data (nightly)'
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '05 0 * * *' # run daily at 5 minutes past midnight
 
