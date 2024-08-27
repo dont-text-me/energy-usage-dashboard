@@ -1,0 +1,14 @@
+.datecard-root {
+  cursor: pointer;
+  width: fit-content;
+}
+
+.datecard-bold {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.datecard-light {
+  font-size: 20px;
+  color: gray;
+}

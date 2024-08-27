@@ -1,18 +1,36 @@
-'use client'
-import {bin} from 'd3-array'
-import {Bar, BarChart, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {DateReading, Usage} from "@/utils/types";
-const UsageHist = ({data} : {data: Usage[]}) => {
-
-    return <ResponsiveContainer width='60%' height={400}>
-        <LineChart width={500} height={300} data={data} margin={{left: 20}}>
-            <XAxis dataKey={'usage'} tick={false}/>
-            <YAxis dataKey={'count'}>
-            </YAxis>
-            <Line dataKey={'count'} />
-            <Tooltip/>
-            <Legend/>
-        </LineChart>
+"use client";
+import { Usage } from "@/utils/types";
+import {
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+const UsageHist = ({
+  data,
+  lineStroke,
+}: {
+  data: Usage[];
+  lineStroke?: string;
+}) => {
+  return (
+    <ResponsiveContainer width="60%" height={400}>
+      <LineChart width={500} height={300} data={data} margin={{ left: 20 }}>
+        <XAxis
+          dataKey={"maxBound"}
+          label="Usage"
+          ticks={[data[0].maxBound, data[data.length - 1].maxBound]}
+        />
+        <YAxis
+          dataKey={"count"}
+          label={{ value: "Frequency", angle: -90 }}
+        ></YAxis>
+        <Line dataKey={"count"} stroke={lineStroke} />
+        <Tooltip />
+      </LineChart>
     </ResponsiveContainer>
-}
-export default UsageHist
+  );
+};
+export default UsageHist;

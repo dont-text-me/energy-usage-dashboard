@@ -12,7 +12,7 @@ def collect_reading_type(driver: WebDriver, resource_type: str) -> list:
         - heater
         - electricity
 
-    Once the results are stored in a dict send them to the database (TODO) or simply store in a file
+    Once the results are stored in a dict, they are persisted to the database (see `persist.py`)
     """
     units = "kwh" if (resource_type in ["electricity", "heater"]) else "m3"
     reading_option_xpath = (
