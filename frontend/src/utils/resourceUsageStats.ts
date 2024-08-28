@@ -15,7 +15,6 @@ export async function retrieveUsage(
   )
     ? "amount (kwh)"
     : "amount (m3)";
-  unstable_noStore();
   const rawData = await kv.get<any[]>(resourceType);
   const data = rawData!!
     .map<DateReading>((it) => ({

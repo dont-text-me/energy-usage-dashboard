@@ -1,6 +1,5 @@
 import ResourceChartGroup from "@/components/ResourceChartGroup";
 import { retrieveUsage } from "@/utils/resourceUsageStats";
-import "./page.css";
 export default async function Home() {
   const elecData = await retrieveUsage("electricity_readings");
   const heaterData = await retrieveUsage("heater_readings");
