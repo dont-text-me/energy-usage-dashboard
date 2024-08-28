@@ -16,8 +16,8 @@ const UsageHist = ({
   lineStroke?: string;
 }) => {
   return (
-    <ResponsiveContainer width="60%" height={400}>
-      <LineChart width={500} height={300} data={data} margin={{ left: 20 }}>
+    <ResponsiveContainer width="90%" height={400}>
+      <LineChart width={450} height={300} data={data}>
         <XAxis
           dataKey={"maxBound"}
           label="Usage"

@@ -1,0 +1,52 @@
+.chart-group-container {
+  width: 100%;
+  display: grid;
+  row-gap: 20px;
+}
+
+.recharts-responsive-container {
+  margin: 0 auto;
+}
+
+.button-group-wrapper {
+  width: 100%;
+}
+
+.button-group {
+  margin: 0 auto;
+}
+
+.button-group-button {
+  background-color: #3498db;
+  border: none;
+  border-radius: 0;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.button-group-button:hover {
+  background-color: #2980b9; /* Slightly darker green */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.button-group-button:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.button-group-button:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.button-group-button.active {
+  background-color: #1f6395;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

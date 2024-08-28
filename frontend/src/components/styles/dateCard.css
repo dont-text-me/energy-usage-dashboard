@@ -1,6 +1,12 @@
 .datecard-root {
   cursor: pointer;
   width: fit-content;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.datecard-root:not(.active):hover {
+  background: whitesmoke;
 }
 
 .datecard-bold {
@@ -11,4 +17,8 @@
 .datecard-light {
   font-size: 20px;
   color: gray;
+}
+
+.active {
+  background: lightgray;
 }

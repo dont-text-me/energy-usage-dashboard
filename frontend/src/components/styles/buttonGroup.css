@@ -5,3 +5,7 @@
 .button-group-button {
   width: 150px;
 }
+
+.button-group {
+  width: fit-content;
+}
