@@ -15,12 +15,10 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v4.1.7
-      - name: install python
-        uses: actions/setup-python@v5.1.1
-        with:
-          python-version: '3.12'
+      - name: setup uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
       - name: install dependencies
-        run: pip install -r requirements.txt
+        run: uv sync --all-extras --dev
       - name: install chromedriver
         uses: nanasess/setup-chromedriver@v2
       - name: scrape data and upload to vercel KV
@@ -29,4 +27,4 @@ jobs:
           SWITCH2_PASSWORD: ${{secrets.switch2_password}}
           KV_REST_API_TOKEN: ${{secrets.kv_rest_api_token}}
           KV_REST_API_URL: ${{secrets.kv_rest_api_url}}
-        run: python3 scrape.py
+        run: uv run scrape.py

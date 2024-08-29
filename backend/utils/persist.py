@@ -6,7 +6,10 @@ import requests
 
 
 def persist(
-    cold_water_readings: list, heater_readings: list, electricity_readings: list, logger: Logger
+    cold_water_readings: list,
+    heater_readings: list,
+    electricity_readings: list,
+    logger: Logger,
 ) -> None:
     rest_api_token = os.environ["KV_REST_API_TOKEN"]
     rest_api_url = os.environ["KV_REST_API_URL"]

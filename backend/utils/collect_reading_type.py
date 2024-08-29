@@ -34,6 +34,9 @@ def collect_reading_type(driver: WebDriver, resource_type: str) -> list:
         date = row.find_element_by_xpath(Selectors.DATE_ROW_XPATH).text
         amount = row.find_element_by_class_name(Selectors.AMOUNT_ROW_CLASSNAME).text
         readings.append(
-            {"date": parse_date_string(date), f"amount ({units})": parse_amount_string(amount)}
+            {
+                "date": parse_date_string(date),
+                f"amount ({units})": parse_amount_string(amount),
+            }
         )
     return readings
