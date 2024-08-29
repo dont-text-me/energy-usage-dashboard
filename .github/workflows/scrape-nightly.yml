@@ -21,7 +21,14 @@ jobs:
           version: 0.4.0
           enable-cache: 'true'
           cache-dependency-glob: 'backend/uv.lock'
+      - name: cache chromedriver
+        id: cache-chromedriver
+        uses: actions/cache@v4
+        with:
+          key: chromedriver-${{ runner.os }}-${{ hashFiles('usr/local/bin/chromedriver') }}
+          path: usr/local/bin/chromedriver
       - name: install chromedriver
+        if: steps.cache-chromedriver.outputs.cache-hit != 'true'
         uses: nanasess/setup-chromedriver@v2
       - name: scrape data and upload to vercel KV
         env:
