@@ -25,8 +25,8 @@ jobs:
         id: cache-chromedriver
         uses: actions/cache@v4
         with:
-          key: chromedriver-${{ runner.os }}-${{ hashFiles('usr/local/bin/chromedriver') }}
-          path: usr/local/bin/chromedriver
+          key: chromedriver
+          path: /usr/local/bin/chromedriver
       - name: install chromedriver
         if: steps.cache-chromedriver.outputs.cache-hit != 'true'
         uses: nanasess/setup-chromedriver@v2
