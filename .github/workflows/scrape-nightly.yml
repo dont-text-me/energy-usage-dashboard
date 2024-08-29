@@ -16,9 +16,11 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v4.1.7
       - name: setup uv
-        run: curl -LsSf https://astral.sh/uv/install.sh | sh
-      - name: install dependencies
-        run: uv sync --all-extras --dev
+        uses: eifinger/setup-uv@v1
+        with:
+          version: 0.4.0
+          enable-cache: 'true'
+          cache-dependency-glob: 'uv.lock'
       - name: install chromedriver
         uses: nanasess/setup-chromedriver@v2
       - name: scrape data and upload to vercel KV
