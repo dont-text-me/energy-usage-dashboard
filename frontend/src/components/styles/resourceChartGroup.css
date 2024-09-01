@@ -31,9 +31,18 @@
     box-shadow 0.3s ease;
 }
 
+.chart-scale-button-group-wrapper .button-group-button {
+  background-color: lightgray;
+  width: 100px;
+}
+
 .button-group-button:hover {
   background-color: #2980b9; /* Slightly darker green */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.chart-scale-button-group-wrapper .button-group-button:hover {
+  background-color: gray;
 }
 
 .button-group-button:first-child {
@@ -49,4 +58,8 @@
 .button-group-button.active {
   background-color: #1f6395;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-scale-button-group-wrapper .button-group-button.active {
+  background-color: darkgray;
 }

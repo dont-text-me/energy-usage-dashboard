@@ -1,6 +1,7 @@
 "use client";
 import { DateReading } from "@/utils/types";
 import {
+  Label,
   Line,
   LineChart,
   ReferenceLine,
@@ -9,16 +10,24 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+
+const DateLabel = ({ x, y, stroke, value }: any) => {
+  const labelValue = "test";
+  return <Label x={x} y={y} stroke={stroke} value={labelValue} />;
+};
+
 const UsageChart = ({
   data,
   domain,
   lineStroke,
   selectedDate,
+  units,
 }: {
   data: DateReading[];
   domain?: [number, number];
   lineStroke?: string;
   selectedDate?: Date;
+  units: "kWh" | "m3";
 }) => {
   const dataSimplified = data.map((it) => ({
     date: `${it.date.getDate()}-${it.date.getMonth() + 1}-${it.date.getFullYear()}`,
@@ -34,7 +43,7 @@ const UsageChart = ({
           allowDataOverflow={false}
         />
         <YAxis dataKey={"amount"} domain={domain}></YAxis>
-        <Line dataKey={"amount"} stroke={lineStroke} width={440} dot={false} />
+        <Line dataKey={"amount"} stroke={lineStroke} width={440} />
         {selectedDate && (
           <ReferenceLine
             x={`${selectedDate.getDate()}-${selectedDate.getMonth() + 1}-${selectedDate.getFullYear()}`}
