@@ -4,7 +4,6 @@ import fetcher from "@/utils/swrFetcher";
 import { DateReading } from "@/utils/types";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useEffect } from "react";
 import {
   Line,
   LineChart,
@@ -14,7 +13,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 
 const UsageChart = ({
   resourceKind,
@@ -29,14 +28,10 @@ const UsageChart = ({
   selectedDate?: Date;
   units: "kWh" | "m3";
 }) => {
-  const { mutate } = useSWRConfig();
   const { data, isLoading } = useSWR<DateReading[]>(
     resourceKind ? `/api/getReadings?resource_type=${resourceKind}` : null,
     fetcher,
   );
-  useEffect(() => {
-    mutate(`/api/getReadings?resource_type=${resourceKind}`);
-  }, [data, resourceKind, mutate]);
 
   if (isLoading || !data) {
     return <Loading />;

@@ -13,6 +13,7 @@
     "@vercel/kv": "^2.0.0",
     "d3-array": "^3.2.4",
     "dayjs": "^1.11.13",
+    "lodash.groupby": "^4.6.0",
     "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
@@ -21,6 +22,7 @@
     "swr": "^2.2.5"
   },
   "devDependencies": {
+    "@types/lodash.groupby": "^4.6.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

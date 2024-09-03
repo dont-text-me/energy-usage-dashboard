@@ -1,7 +1,7 @@
 import { ResourceKind, retrieveUsage } from "@/utils/resourceUsageStats";
 import { DateReading } from "@/utils/types";
+import groupBy from "lodash.groupby";
 import { NextRequest, NextResponse } from "next/server";
-
 const isResourceKind = (x: string): x is ResourceKind =>
   ["electricity_readings", "cold_water_readings", "heater_readings"].includes(
     x,
@@ -20,17 +20,11 @@ export async function GET(
   const rawData = await retrieveUsage(resourceType);
   switch (grouping) {
     case "week":
-      return NextResponse.json(
-        Object.groupBy(rawData, (it) => extractWeek(it.date)),
-      );
+      return NextResponse.json(groupBy(rawData, (it) => extractWeek(it.date)));
     case "month":
-      return NextResponse.json(
-        Object.groupBy(rawData, (it) => extractMonth(it.date)),
-      );
+      return NextResponse.json(groupBy(rawData, (it) => extractMonth(it.date)));
     case "year":
-      return NextResponse.json(
-        Object.groupBy(rawData, (it) => extractYear(it.date)),
-      );
+      return NextResponse.json(groupBy(rawData, (it) => extractYear(it.date)));
     default:
       return new NextResponse(
         'Invalid grouping, options are "week", "month" and "year"',

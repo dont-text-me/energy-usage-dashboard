@@ -2,7 +2,6 @@ import Loading from "@/components/Loading";
 import { ResourceKind } from "@/utils/resourceUsageStats";
 import fetcher from "@/utils/swrFetcher";
 import { DateReading } from "@/utils/types";
-import { useEffect } from "react";
 import {
   Bar,
   BarChart,
@@ -11,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 
 const PeriodizedUsageBarChart = ({
   resourceKind,
@@ -24,18 +23,12 @@ const PeriodizedUsageBarChart = ({
   units?: string;
   barFill: string;
 }) => {
-  const { mutate } = useSWRConfig();
   const { data, isLoading } = useSWR<Record<string, DateReading[]>>(
     resourceKind
       ? `/api/getGroupedReadings?resource_type=${resourceKind}&groupBy=${grouping}`
       : null,
     fetcher,
   );
-  useEffect(() => {
-    mutate(
-      `/api/getGroupedReadings?resource_type=${resourceKind}&groupBy=${grouping}`,
-    );
-  }, [data, resourceKind, mutate, grouping]);
 
   if (isLoading || !data) {
     return <Loading />;
