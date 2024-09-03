@@ -21,5 +21,12 @@ export async function retrieveUsage(
       date: parseDate(it["date"]),
       amount: parseInt(it[amountKey]),
     }))
-    .toSorted((a, b) => a.date.valueOf() - b.date.valueOf());
+    .toSorted((d1, d2) => {
+      const [day1, month1, year1] = d1.date.split("-").map(Number);
+      const [day2, month2, year2] = d2.date.split("-").map(Number);
+      const date1 = new Date(year1, month1 - 1, day1);
+      const date2 = new Date(year2, month2 - 1, day2);
+
+      return date1.valueOf() - date2.valueOf();
+    });
 }
