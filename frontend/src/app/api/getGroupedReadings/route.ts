@@ -2,6 +2,7 @@ import { ResourceKind, retrieveUsage } from "@/utils/resourceUsageStats";
 import { DateReading } from "@/utils/types";
 import groupBy from "lodash.groupby";
 import { NextRequest, NextResponse } from "next/server";
+
 const isResourceKind = (x: string): x is ResourceKind =>
   ["electricity_readings", "cold_water_readings", "heater_readings"].includes(
     x,
@@ -32,6 +33,7 @@ export async function GET(
       );
   }
 }
+
 /**
  * Extract month/year pair. Example: `August 2024`
  * */
@@ -49,7 +51,7 @@ const extractYear = (x: string): string => x.split("-")[2];
 const extractWeek = (x: string): string => {
   const [day, month, year] = x.split("-").map(Number);
   const date = new Date(year, month - 1, day);
-  const daysSinceMonday = (date.getDay() + 1) % 7; // monday is day 0, sunday is day 6
+  const daysSinceMonday = date.getDay() === 0 ? 6 : date.getDay() - 1; // monday is day 0, sunday is day 6
   const mondayDate = new Date(
     date.getTime() - daysSinceMonday * 24 * 3600 * 1000,
   );
