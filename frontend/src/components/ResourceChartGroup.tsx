@@ -94,12 +94,14 @@ const ResourceChartGroup = () => {
             selectedDate={selectedDate}
             units={chartSettings.units}
           />
-          <PeriodizedUsageBarChart
-            resourceKind={chartSettings.resourceName}
-            grouping={selectedGrouping}
-            barFill={chartSettings.lineColor}
-            units={chartSettings.units}
-          />
+          {selectedGrouping && (
+            <PeriodizedUsageBarChart
+              resourceKind={chartSettings.resourceName}
+              grouping={selectedGrouping}
+              barFill={chartSettings.lineColor}
+              units={chartSettings.units}
+            />
+          )}
         </div>
       )}
     </div>
