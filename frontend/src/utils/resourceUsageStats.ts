@@ -1,35 +1,32 @@
 import { parseDate } from "@/utils/parseDate";
-import { DateReading, Usage } from "@/utils/types";
+import { DateReading } from "@/utils/types";
 import { kv } from "@vercel/kv";
-import { bin } from "d3-array";
-import { unstable_noStore } from "next/cache";
+
+export type ResourceKind =
+  | "electricity_readings"
+  | "cold_water_readings"
+  | "heater_readings";
 
 export async function retrieveUsage(
-  resourceType:
-    | "electricity_readings"
-    | "cold_water_readings"
-    | "heater_readings",
-): Promise<[DateReading[], Usage[]]> {
+  resourceType: ResourceKind,
+): Promise<DateReading[]> {
   const amountKey = ["electricity_readings", "heater_readings"].includes(
     resourceType,
   )
     ? "amount (kwh)"
     : "amount (m3)";
   const rawData = await kv.get<any[]>(resourceType);
-  const data = rawData!!
+  return rawData!!
     .map<DateReading>((it) => ({
       date: parseDate(it["date"]),
       amount: parseInt(it[amountKey]),
     }))
-    .toSorted((a, b) => a.date.valueOf() - b.date.valueOf());
-  const amounts = data.map((it) => it.amount);
-  const dailyUsage = amounts
-    .map((before, idx) => amounts[idx + 1] - before)
-    .slice(0, amounts.length - 1);
-  const bins = bin().thresholds(6)(dailyUsage);
-  const binData = bins.map<Usage>((it) => ({
-    maxBound: it.x1!!,
-    count: it.length,
-  }));
-  return [data, binData];
+    .toSorted((d1, d2) => {
+      const [day1, month1, year1] = d1.date.split("-").map(Number);
+      const [day2, month2, year2] = d2.date.split("-").map(Number);
+      const date1 = new Date(year1, month1 - 1, day1);
+      const date2 = new Date(year2, month2 - 1, day2);
+
+      return date1.valueOf() - date2.valueOf();
+    });
 }

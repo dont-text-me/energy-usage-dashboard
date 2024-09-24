@@ -1,7 +1,7 @@
 /**
- * Converts a mm-dd-yyyy string to a Date object
+ * Converts a mm-dd-yyyy string to dd-mm-yyyy
  * */
-export const parseDate = (input: String): Date => {
+export const parseDate = (input: String): string => {
   const [month, day, year] = input.split("-").map((it) => parseInt(it));
-  return new Date(year, month - 1 /*convert month to month index*/, day);
+  return [day, month, year].join("-");
 };

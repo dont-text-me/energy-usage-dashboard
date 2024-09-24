@@ -1,5 +1,5 @@
 interface DateReading {
-  date: Date;
+  date: string; // dd-mm-yyyy
   amount: number;
 }
 interface Usage {
