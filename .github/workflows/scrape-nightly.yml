@@ -29,7 +29,7 @@ jobs:
           path: /usr/local/bin/chromedriver
       - name: install chromedriver
         if: steps.cache-chromedriver.outputs.cache-hit != 'true'
-        uses: nanasess/setup-chromedriver@v2
+        uses: nanasess/setup-chromedriver@v2.2.2
       - name: scrape data and upload to vercel KV
         env:
           SWITCH2_USERNAME: ${{secrets.switch2_username}}
